@@ -161,17 +161,23 @@ const clock = new THREE.Clock();
 function animate() {
   const elapsedTime = clock.getElapsedTime();
 
-  // Move the camera gradually to go through the front of the house
+  // Draai de draak continu
+  if (dragon) {
+    dragon.rotation.y += 0.01;
+  }
+
+  // Beweeg de camera
   camera.position.z -= 0.01;
   camera.position.x -= 0.005;
-  camera.lookAt(0, 1.5, 0);  // Gericht op het midden van het huis
+  camera.lookAt(0, 1.5, 0);
   
   if (camera.position.z < -2) {
-    camera.position.set(10, 5, 10);  // Reset camera voor continue loop
+    camera.position.set(10, 5, 10);
   }
 
   controls.update();
   renderer.render(scene, camera);
 }
+
 
 animate();
