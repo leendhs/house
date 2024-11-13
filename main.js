@@ -28,7 +28,7 @@ scene.add(directionalLight);
 // Load the dragon model
 const gltfLoader = new GLTFLoader();
 gltfLoader.load(
-  'public/a_cute_burning_dragon.glb', // Path to your dragon model
+  '/a_cute_burning_dragon.glb', // Path to your dragon model
   (gltf) => {
     const dragon = gltf.scene;
     dragon.scale.set(0.8, 0.8, 0.8); // Increase size slightly
@@ -126,7 +126,7 @@ scene.add(roof);
 
 // Painting (naam/foto kaart) op de voorwand
 const textureLoader = new THREE.TextureLoader();
-const paintingTexture = textureLoader.load('public/leen.jpg');
+const paintingTexture = textureLoader.load('/leen.jpg');
 const paintingGeometry = new THREE.PlaneGeometry(1, 1.5);
 const paintingMaterial = new THREE.MeshStandardMaterial({ map: paintingTexture });
 const painting = new THREE.Mesh(paintingGeometry, paintingMaterial);
@@ -161,23 +161,17 @@ const clock = new THREE.Clock();
 function animate() {
   const elapsedTime = clock.getElapsedTime();
 
-  // Draai de draak continu
-  if (dragon) {
-    dragon.rotation.y += 0.01;
-  }
-
-  // Beweeg de camera
+  // Move the camera gradually to go through the front of the house
   camera.position.z -= 0.01;
   camera.position.x -= 0.005;
-  camera.lookAt(0, 1.5, 0);
+  camera.lookAt(0, 1.5, 0);  // Gericht op het midden van het huis
   
   if (camera.position.z < -2) {
-    camera.position.set(10, 5, 10);
+    camera.position.set(10, 5, 10);  // Reset camera voor continue loop
   }
 
   controls.update();
   renderer.render(scene, camera);
 }
-
 
 animate();
